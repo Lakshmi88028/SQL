@@ -231,6 +231,24 @@ update movies_details set ratings = 9 where collection in (select max(collection
 
 delete from movies_details where id in (select id from movies_details_duplicate where id>1);
 
+set autocommit = 0;
+
+INSERT INTO movies_details(id,name,year,lang,director,platform,budget,collection,ratings) VALUE(12,"Robert",2021,"Kannada","abc","Amazon prime",3000,5000,9.9);
+
+commit;
+SELECT*FROM movies_details;
+
+rollback;
+commit;
+update movies_details set ratings = 5 where id = 12;
+commit;
+rollback;
+
+INSERT INTO movies_details(id,name,year,lang,director,platform,budget,collection,ratings) VALUE(13,"Badava Rascal",2021,"Kannada","abc","Amazon prime",3000,5000,9.9);
+update movies_details set ratings=5 where id=3;
+delete from movies_details where id=11;
+select * from movies_details;
+
 
 
 
