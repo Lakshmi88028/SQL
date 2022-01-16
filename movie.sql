@@ -249,42 +249,41 @@ update movies_details set ratings=5 where id=3;
 delete from movies_details where id=11;
 select * from movies_details;
 
+delete from movies_details where id=12;
+rollback;
+delete from movies_details where id=13;
+rollback;
+delete from movies_details where id=4;
+rollback;
 
+update movies_details set ratings=8.0 where id=4;
+savepoint A;
 
+update movies_details set collection =3000 where id=5;
+savepoint B;
 
+update  movies_details set ratings=9 where id=5;
+savepoint C;
 
+rollback to  B;
+rollback to A;
 
+release savepoint A;
 
+select user();
 
+select user, host from mysql.user;
 
+create user 'newuser'@'localhost' identified by 'password';
 
+show grants for 'newuser'@'localhost';
 
+-- grant some permission
+grant select,update on movies.movies_details to 'newuser'@'localhost';
 
+-- grant all permission
+grant all on *.* to  'newuser'@'localhost';
 
+revoke update on movies.movies_details from 'newuser'@'localhost';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+revoke select on  movies.movies_details from 'newuser'@'localhost';
